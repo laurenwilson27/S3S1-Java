@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 /**
  * Class which represents a Patron of the library. The Patron can check books out to their borrowed list.
+ * 
+ * @author Lauren Wilson
  */
 public class Patron {
     private String name;
