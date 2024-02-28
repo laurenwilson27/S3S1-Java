@@ -6,11 +6,19 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.time.LocalDate;
 
+/**
+ * Class to represent the full library system.
+ * 
+ * @author Lauren Wilson
+ */
 public class Library {
     private ArrayList<Author> authors;
     private ArrayList<Patron> patrons;
     private ArrayList<Book> books;
 
+    /**
+     * Class constructor. Once instantiated, Authors, Patrons, and Books can be added to the Library.
+     */
     // The Library's constructor has no parameters - authors, books, and patrons are added after the fact
     public Library() {
         this.authors = new ArrayList<Author>();
@@ -18,16 +26,52 @@ public class Library {
         this.books = new ArrayList<Book>();
     }
 
+    /**
+     * 
+     * @return A list of the Authors known by the library. Every Book in the system must be written by one of these Authors.
+     */
     public ArrayList<Author> getAuthors() { return authors; }
+    /**
+     * 
+     * @return A list of Patrons registered in the library.
+     */
     public ArrayList<Patron> getPatrons() { return patrons; }
+    /**
+     * 
+     * @return A list of Books which can be found in the library.
+     */
     public ArrayList<Book> getBooks() { return books; }
 
+    /**
+     * Adds an author to the system.
+     * 
+     * @param author The Author to be added.
+     */
     public void addAuthor(Author author) { authors.add(author); }
+    /**
+     * Adds a patron to the system.
+     * 
+     * @param patron The Patron to be added.
+     */
     public void addPatron(Patron patron) { patrons.add(patron); }
+    /**
+     * Adds a book to the system. Note that copies of it are not automatically made available.
+     * 
+     * @param book The Book to be added
+     */
     public void addBook(Book book) { books.add(book); }
 
     // Shortcut methods which create new instances of a class, add them to relevant a lists, and return the instances
     // This allows for simpler code elsewhere
+    /**
+     * Adds a new Author to the system, and returns the Author.
+     * 
+     * @param name Name of the author.
+     * @param year Year the author was born.
+     * @param month Month the author was born.
+     * @param day Day the author was born.
+     * @return The new Author.
+     */
     public Author addAuthor(String name, int year, int month, int day) {
         LocalDate newDOB = LocalDate.of(year, month, day);
         Author newAuthor = new Author(name, newDOB);
@@ -36,6 +80,14 @@ public class Library {
         return newAuthor;
     }
 
+    /**
+     * Adds a new Patron to the system, and retrns the Patron.
+     * 
+     * @param name Name of the patron.
+     * @param address Home address of the patron.
+     * @param phoneNum Phone number of the patron.
+     * @return The new Patron.
+     */
     public Patron addPatron(String name, String address, String phoneNum) {
         Patron newPatron = new Patron(name, address, phoneNum);
 
@@ -43,6 +95,15 @@ public class Library {
         return newPatron;
     }
 
+    /**
+     * Adds a new Book to the system, and returns the Book.
+     * 
+     * @param title Title of the book.
+     * @param author Author of the book.
+     * @param isbn ISBN of the book.
+     * @param publisher Publisher of the book.
+     * @return The new Book
+     */
     public Book addBook(String title, Author author, String isbn, String publisher) {
         Book newBook = new Book(title, author, isbn, publisher);
         books.add(newBook);
@@ -50,8 +111,12 @@ public class Library {
         return newBook;
     }
 
-    // Function to search through known Authors for a specific name
-    // returns null if no match was found
+    /**
+     * Searches known Authors for a specific name.
+     * 
+     * @param name Name to search for.
+     * @return The first matching Author. Will be <code>null</code> if no match was found.
+     */
     public Author findAuthorByName(String name) {
         Author result = null;
         for (Author author : authors) {
@@ -65,7 +130,12 @@ public class Library {
         return result;
     }
 
-    // Searches for a book in the library by title
+    /**
+     * Searches for a Book with the given title.
+     * 
+     * @param title Title of the book to search for.
+     * @return The first matching Book. Will be <code>null</code> if no match was found.
+     */
     public Book findBookByTitle(String title) {
         Book result = null;
         for (Book book : books) {
@@ -78,7 +148,12 @@ public class Library {
         return result;
     }
 
-    // Searches for a book in the library by ISBN
+    /**
+     * Searches for a Book with the given ISBN.
+     * 
+     * @param isbn The ISBN of the book.
+     * @return The first matching Book. Will be <code>null</code> if no match was found.
+     */
     public Book findBookByISBN(String isbn) {
         Book result = null;
         for (Book book : books) {
@@ -90,9 +165,12 @@ public class Library {
 
         return result;
     }
-
-    // Searches for books in the library by author
-    // Since more than one book can have the same author, this returns a list of books
+    /**
+     * Searches for all Books by the given author.
+     * 
+     * @param authorName The name of the book's author.
+     * @return A list of all matching Books.
+     */
     public ArrayList<Book> findBooksByAuthor(String authorName) {
         ArrayList<Book> results = new ArrayList<Book>();
         for (Book book : books) {
@@ -103,8 +181,13 @@ public class Library {
         return results;
     } 
 
-    // Searches for a library patron by name and address
-    // (Because the name is not neccesarily unique, address is used as an additional filter)
+    /**
+     * Searches for a Patron of the library. Both their name and home address must be specified.
+     * 
+     * @param name Name of the Patron.
+     * @param address Address of the Patron.
+     * @return The matching Matron. Will be <code>null</code> if no match was found.
+     */
     public Patron findPatron(String name, String address) {
         Patron result = null;
 
@@ -128,7 +211,11 @@ public class Library {
         return result;
     }
 
-    // Function to automatically add authors from a file
+    /**
+     * Reads a list of Authors from a file. The list must be in CSV format.
+     * 
+     * @param file The file to read.
+     */
     public void loadAuthors(String file) {
         // We'll assume the file is formatted as CSV data, which is easy to parse
         String delimiter = ",";
@@ -153,7 +240,11 @@ public class Library {
         };
     }
 
-    // Function to automatically add authors from a file
+    /**
+     * Reads a list of Patrons from a file. The list must be in CSV format.
+     * 
+     * @param file The file to read.
+     */
     public void loadPatrons(String file) {
         // We'll assume the file is formatted as CSV data, which is easy to parse
         String delimiter = ",";
@@ -178,7 +269,11 @@ public class Library {
         };
     }
 
-    // Function to automatically add books from a file
+    /**
+     * Reads a list of Books from a file. The list must be in CSV format.
+     * 
+     * @param file The file to read.
+     */
     public void loadBooks(String file) {
         // We'll assume the file is formatted as CSV data, which is easy to parse
         String delimiter = ",";
@@ -190,11 +285,7 @@ public class Library {
             // Continue reading lines until there is nothing left to read
             while ((line = csv.readLine()) != null) {
                 String data[] = line.split(delimiter);
-                Book newBook = addBook(data[0], findAuthorByName(data[1]), data[2], data[3]);
-
-            // Add a random number copies of each book
-            int num = (int) (Math.random() * 5) + 2;
-            newBook.addCopies(num);
+                addBook(data[0], findAuthorByName(data[1]), data[2], data[3]);
             }
 
             csv.close();

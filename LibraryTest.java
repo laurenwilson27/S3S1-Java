@@ -13,6 +13,12 @@ public class LibraryTest {
         lib.loadPatrons("./data/patrons.csv");
         lib.loadBooks("./data/books.csv");
 
+        // Add a random number (3-7) of copies of each book, so we can test borrowing
+        for (Book book : lib.getBooks()) {
+            int num = (int) (Math.random() * 5) + 3;
+            book.addCopies(num);
+        }
+
         System.out.println("Get ISBN of The Big Book of Nothing:");
         System.out.println(lib.findBookByTitle("The Big Book of Nothing").getISBN());
 
