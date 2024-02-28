@@ -1,13 +1,17 @@
 import java.util.Scanner;
 
+import library.Book;
+import library.Library;
+import library.Patron;
+
 public class LibraryTest {
     public static void main(String[] args) {
         Library lib = new Library();
         Scanner input = new Scanner(System.in);
 
-        lib.loadAuthors("src/authors.csv");
-        lib.loadPatrons("src/patrons.csv");
-        lib.loadBooks("src/books.csv");
+        lib.loadAuthors("./data/authors.csv");
+        lib.loadPatrons("./data/patrons.csv");
+        lib.loadBooks("./data/books.csv");
 
         System.out.println("Get ISBN of The Big Book of Nothing:");
         System.out.println(lib.findBookByTitle("The Big Book of Nothing").getISBN());
